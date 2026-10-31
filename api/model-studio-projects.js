@@ -1,5 +1,6 @@
 import { get, del } from "@vercel/blob";
-import { readSession } from "../lib/model-studio-auth.js";
+import { randomUUID } from "node:crypto";
+import { readSession, getAssignedProjects } from "../lib/model-studio-auth.js";
 
 const API = "https://api.github.com";
 const API_VERSION = "2022-11-28";
@@ -11,9 +12,14 @@ export default async function projectsHandler(request, response) {
   if (!sameOrigin(request)) return response.status(403).json({ error: "This request is not allowed." });
   const session = await sessionFor(request);
   if (!session) return response.status(401).json({ error: "Sign in to continue." });
-  if (session.role !== "admin") return response.status(403).json({ error: "Admin access is required." });
+  const action = request.body?.action;
   try {
-    const action = request.body?.action;
+    if (session.role === "client" && action === "list-client") {
+      const assignedIds = new Set((await getAssignedProjects(session)).map((project) => project.id));
+      const projects = (await listProjects()).filter((project) => assignedIds.has(project.id));
+      return response.status(200).json({ projects });
+    }
+    if (session.role !== "admin") return response.status(403).json({ error: "Admin access is required." });
     if (action === "list") return response.status(200).json({ projects: await listProjects() });
     if (action === "save") return response.status(200).json(await saveProject(request.body || {}));
     if (action === "discard") { await cleanupUploads(request.body?.files); return response.status(200).json({ ok: true }); }
@@ -148,7 +154,7 @@ async function saveProject(body) {
   const cleanUploads = uploads.map((item) => ({ pathname: item.pathname, name: cleanFilename(item.name) }));
   if (new Set(cleanUploads.map((item) => item.name.toLowerCase())).size !== cleanUploads.length) throw Object.assign(new Error("Choose each filename only once."), { status: 400 });
   for (const item of cleanUploads) names.set(item.name, pathFor(folder, item.name));
-  const project = action === "update" ? { ...manifest[index], title, folder } : { id: slug(title), title, folder };
+  const project = action === "update" ? { ...manifest[index], title, folder } : { id: slug(title) + "-" + randomUUID().slice(0, 8), title, folder };
   if (action === "add" && manifest.some((entry) => entry.id === project.id)) project.id += "-" + Math.random().toString(36).slice(2, 7);
   const validProject = validateFiles(project, [...names.keys()]);
   const changes = [];
