@@ -1,0 +1,17 @@
+{
+  "buildCommand": "python3 scripts/generate-studio-projects.py",
+  "outputDirectory": ".",
+  "proxy": {
+    "entrypoint": "proxy.js",
+    "matcher": ["/:path*"]
+  },
+  "headers": [
+    {
+      "source": "/:path*",
+      "headers": [
+        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
+      ]
+    }
+  ]
+}

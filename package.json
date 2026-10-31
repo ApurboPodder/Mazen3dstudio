@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@vercel/functions": "3.4.3"
+  },
+  "scripts": {
+    "test": "node scripts/check-project.js"
+  }
+}

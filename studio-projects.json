@@ -1,0 +1,43 @@
+[
+  {
+    "id": "110317",
+    "title": "110317",
+    "model": "assets/studio/110317/GLB1.glb",
+    "visibleModel": "assets/studio/110317/GLB2.glb",
+    "images": [
+      "assets/studio/110317/1.webp",
+      "assets/studio/110317/2.webp",
+      "assets/studio/110317/3.webp",
+      "assets/studio/110317/4.webp"
+    ],
+    "downloadArchive": "assets/studio/110317/110317.zip"
+  },
+  {
+    "id": "127518s",
+    "title": "127518S",
+    "model": "assets/studio/127518S/GLB1.glb",
+    "visibleModel": "assets/studio/127518S/GLB2.glb",
+    "images": [
+      "assets/studio/127518S/1.webp",
+      "assets/studio/127518S/2.webp",
+      "assets/studio/127518S/3.webp",
+      "assets/studio/127518S/4.webp",
+      "assets/studio/127518S/5.webp"
+    ],
+    "downloadArchive": "assets/studio/127518S/127518S.rar"
+  },
+  {
+    "id": "project-6",
+    "title": "Project 6",
+    "model": "assets/studio/Project%206/GLB1.glb",
+    "visibleModel": "assets/studio/Project%206/GLB2.glb",
+    "images": [
+      "assets/studio/Project%206/1.webp",
+      "assets/studio/Project%206/2.webp",
+      "assets/studio/Project%206/3.webp",
+      "assets/studio/Project%206/4.webp",
+      "assets/studio/Project%206/5.webp"
+    ],
+    "downloadArchive": "assets/studio/Project%206/Project%206.zip"
+  }
+]

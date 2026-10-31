@@ -1,0 +1,30 @@
+{
+  "id": "./",
+  "name": "Mazen Model Studio",
+  "short_name": "Model Studio",
+  "description": "Independent local eyewear GLB viewer and project gallery.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f1efeb",
+  "theme_color": "#f1efeb",
+  "categories": [
+    "design",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./icons/eyewear-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icons/eyewear-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
