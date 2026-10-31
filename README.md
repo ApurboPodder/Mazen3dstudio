@@ -11,3 +11,16 @@ Set the admin password and session signing secret listed in .env.example. For lo
 Client passwords are stored as salted scrypt hashes. Account records are stored in Redis under model-studio:clients; passwords are never returned to the browser. If Redis is not configured, the admin can still sign in, but client account management and client sign-in are unavailable.
 
 For a project deployed from the repository root, set the variables on the root Vercel project. If this folder is deployed as its own Vercel project, set them on that project. Login sessions last eight hours; the Log out button ends the session. Keep credentials in environment settings and do not commit real passwords or tokens.
+
+## Admin project management
+
+Administrators can open **Manage projects** from the studio header to add, modify, or delete projects. Project files are uploaded to a Vercel Blob store, then the server commits them and the updated studio-projects.json to GitHub in one commit. The project must be linked to the same GitHub repository and production branch in Vercel for commits to trigger deployments.
+
+Configure these Vercel Production environment variables:
+
+- GITHUB_TOKEN: a fine-grained personal access token restricted to the project repository with Contents read/write permission. Keep it server-side and private.
+- GITHUB_REPOSITORY: owner/repository, such as mazen/model-studio.
+- GITHUB_BRANCH: the branch connected to Vercel Production (often main).
+- BLOB_READ_WRITE_TOKEN: connect a Vercel Blob store with Private access to this project; Vercel supplies this variable.
+
+The manager accepts 4–5 images, exactly 2 GLB models, and at least one ZIP or RAR archive per project. Files up to 75 MB each can be committed. A new project needs its complete set of required files in one upload; modifying a project can replace or add files while retaining its existing files.

@@ -1,7 +1,7 @@
 import json
 import re
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 ROOT = Path(__file__).resolve().parent.parent
 STUDIO = ROOT / "assets" / "studio"
@@ -18,6 +18,16 @@ def asset_path(path):
 
 def discover():
     projects = []
+    previous = {}
+    manifest = ROOT / "studio-projects.json"
+    if manifest.is_file():
+        try:
+            for project in json.loads(manifest.read_text(encoding="utf-8")):
+                model_path = unquote(project.get("model", ""))
+                folder_name = project.get("folder") or Path(model_path).parent.name
+                previous[folder_name.casefold()] = project
+        except (json.JSONDecodeError, TypeError):
+            previous = {}
     if not STUDIO.is_dir():
         return projects
     for folder in sorted((item for item in STUDIO.iterdir() if item.is_dir()), key=lambda item: natural_key(item.name)):
@@ -27,10 +37,12 @@ def discover():
         archives = sorted((item for item in files if item.suffix.casefold() in (".zip", ".rar")), key=lambda item: natural_key(item.name))
         if len(images) not in (4, 5) or len(models) != 2 or not archives:
             continue
-        project_id = re.sub(r"[^a-z0-9]+", "-", folder.name.casefold()).strip("-") or "studio-project"
+        old_project = previous.get(folder.name.casefold(), {})
+        project_id = old_project.get("id") or re.sub(r"[^a-z0-9]+", "-", folder.name.casefold()).strip("-") or "studio-project"
         projects.append({
             "id": project_id,
-            "title": folder.name,
+            "title": old_project.get("title") or folder.name,
+            "folder": folder.name,
             "model": asset_path(models[0]),
             "visibleModel": asset_path(models[1]),
             "images": [asset_path(image) for image in images],

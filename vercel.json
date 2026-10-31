@@ -3,15 +3,31 @@
   "outputDirectory": ".",
   "proxy": {
     "entrypoint": "proxy.js",
-    "matcher": ["/:path*"]
+    "matcher": [
+      "/:path*"
+    ]
   },
   "headers": [
     {
       "source": "/:path*",
       "headers": [
-        { "key": "Cache-Control", "value": "private, no-store, max-age=0" },
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive" }
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/model-studio-projects.js": {
+      "maxDuration": 60
+    },
+    "api/model-studio-project-upload.js": {
+      "maxDuration": 60
+    }
+  }
 }
