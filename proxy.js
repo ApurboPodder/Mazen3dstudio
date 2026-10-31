@@ -1,5 +1,5 @@
 import { next } from "@vercel/functions";
-import { readSession } from "./lib/model-studio-auth.js";
+import { readSession, getAssignedProjects } from "./lib/model-studio-auth.js";
 
 export default async function proxy(request) {
   const url = new URL(request.url);
@@ -8,6 +8,19 @@ export default async function proxy(request) {
   const session = await readSession(cookie?.slice("model_studio_session=".length) || "", process.env.MODEL_STUDIO_SESSION_SECRET);
   if (session) {
     if (["/admin.html", "/admin-projects.html"].includes(url.pathname) && session.role !== "admin") return Response.redirect(new URL("/", url.origin), 302);
+    if (session.role === "client") {
+      let pathname;
+      try { pathname = decodeURIComponent(url.pathname); } catch { return new Response("Not found", { status: 404 }); }
+      if (pathname === "/studio-projects.json") return new Response("Not found", { status: 404 });
+      if (pathname === "/assets/studio" || pathname.startsWith("/assets/studio/")) {
+        const folder = pathname.split("/")[3];
+        if (!folder) return new Response("Not found", { status: 404 });
+        try {
+          const allowed = await getAssignedProjects(session);
+          if (!allowed.some((project) => project.folder === folder)) return new Response("Not found", { status: 404 });
+        } catch { return new Response("Project access is temporarily unavailable", { status: 503 }); }
+      }
+    }
     return next();
   }
   const loginUrl = new URL("/login.html", url.origin);
