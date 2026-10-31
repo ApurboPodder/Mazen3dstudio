@@ -82,4 +82,4 @@ body.theme-dark .viewer-layout>.project-preview-list,body.theme-dark .viewer-too
 body.theme-dark .viewer-layout>.viewer{box-shadow:inset 8px 8px 18px var(--shadow-dark),inset -8px -8px 18px var(--shadow-light)}
 body.theme-dark .language-label select,body.theme-dark .face-toggle select{box-shadow:inset 4px 4px 8px var(--shadow-dark),inset -4px -4px 8px var(--shadow-light)}
 
-.manage-clients-link{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid var(--line,#d9dde3);border-radius:9px;color:inherit;text-decoration:none;font-size:12px;font-weight:600}.manage-clients-link:hover{background:rgba(255,255,255,.45)}
+.manage-clients-link{display:inline-flex;align-items:center;min-height:36px;padding:0 12px;border:1px solid var(--line,#d9dde3);border-radius:9px;color:inherit;text-decoration:none;font-size:12px;font-weight:600}.manage-clients-link:hover{background:rgba(255,255,255,.45)}.manage-clients-link[hidden]{display:none!important}
