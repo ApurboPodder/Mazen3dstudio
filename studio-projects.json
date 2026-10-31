@@ -39,5 +39,20 @@
       "assets/studio/Project%206/5.webp"
     ],
     "downloadArchive": "assets/studio/Project%206/Project%206.zip"
+  },
+  {
+    "id": "project-8",
+    "title": "Project 8",
+    "folder": "project-8",
+    "model": "assets/studio/project-8/GLB1.glb",
+    "visibleModel": "assets/studio/project-8/GLB2.glb",
+    "images": [
+      "assets/studio/project-8/1%20(1).webp",
+      "assets/studio/project-8/2.webp",
+      "assets/studio/project-8/3.webp",
+      "assets/studio/project-8/4.webp",
+      "assets/studio/project-8/5.webp"
+    ],
+    "downloadArchive": "assets/studio/project-8/Project%208.rar"
   }
 ]
