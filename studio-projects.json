@@ -54,5 +54,20 @@
       "assets/studio/project-8/5.webp"
     ],
     "downloadArchive": "assets/studio/project-8/Project%208.rar"
+  },
+  {
+    "id": "project-7-3889fd06",
+    "title": "Project 7",
+    "folder": "project-7",
+    "model": "assets/studio/project-7/GLB1.glb",
+    "visibleModel": "assets/studio/project-7/GLB2.glb",
+    "images": [
+      "assets/studio/project-7/1.webp",
+      "assets/studio/project-7/2.webp",
+      "assets/studio/project-7/3.webp",
+      "assets/studio/project-7/4.webp",
+      "assets/studio/project-7/5.webp"
+    ],
+    "downloadArchive": "assets/studio/project-7/Project%207.rar"
   }
 ]
