@@ -8,7 +8,7 @@ Set the admin password and session signing secret listed in .env.example. For lo
 - MODEL_STUDIO_SESSION_SECRET: a separate random secret of at least 32 characters. Generate one with node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))".
 - UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN: the REST URL and token for an Upstash Redis database. Client management needs these values to persist accounts across serverless requests.
 
-Client passwords are stored as salted scrypt hashes. Account records are stored in Redis under model-studio:clients; passwords are never returned to the browser. If Redis is not configured, the admin can still sign in, but client account management and client sign-in are unavailable.
+Client passwords are stored as salted scrypt hashes. Account records are stored in Redis under model-studio:clients; passwords are never returned to the browser. Three failed sign-in attempts from the same browser/network fingerprint block admin and client sign-in for 15 minutes. Redis keeps this lockout consistent across serverless instances; without Redis, admin-only deployments use an in-memory fallback that can reset between instances. If Redis is not configured, client account management and client sign-in are unavailable.
 
 For a project deployed from the repository root, set the variables on the root Vercel project. If this folder is deployed as its own Vercel project, set them on that project. Login sessions last eight hours; the Log out button ends the session. Keep credentials in environment settings and do not commit real passwords or tokens.
 
